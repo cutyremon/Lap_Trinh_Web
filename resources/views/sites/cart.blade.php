@@ -67,13 +67,13 @@
                                     <tr>
                                         <td class="col-sm-8 col-md-6">
                                             <div class="media">
-                                                <a href={{route('product.detail',$product->id)}}> <img
+                                                <a href={{route('product.detail',$product->product_id)}}> <img
                                                             class="media-object img-responsive"
                                                             src="../img/{{$product->avatar}}">
                                                 </a>
                                                 <div class="media-body">
                                                     <h4 class="media-heading"><a
-                                                                href={{route('product.detail',$product->id)}}>{{$product->name}}</a>
+                                                                href={{route('product.detail',$product->product_id)}}>{{$product->name}}</a>
                                                     </h4>
                                                     <h5 class="media-heading"> Type : <a
                                                                 href={{route('menu')}}>{{$product->category}}</a></h5>
@@ -145,9 +145,9 @@
 @endsection
 
 @section('script')
-    {{ HTML::script('bower/jquery-1.12.4/index.js')}}
-    {{ HTML::script('bower/jquery-ui/jquery-ui.js') }}
     {{ HTML::script('js/sites/cart.js') }}
     {{ HTML::script('bower/bootbox/bootbox.js') }}
+    {{ HTML::script('bower/jquery-1.12.4/index.js')}}
+    {{ HTML::script('bower/jquery-ui/jquery-ui.js') }}
 @endsection
 

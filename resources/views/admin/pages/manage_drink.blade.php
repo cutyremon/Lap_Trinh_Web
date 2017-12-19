@@ -7,7 +7,7 @@
     <div class="content-wrapper" >
         <section class="content-header">
             <h1>
-                MANAGE drink
+                MANAGE DRINK
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -42,8 +42,7 @@
                                             <img src="../img/{{$drink->avatar}}" class="fix-img" alt="">
                                             <i> {{$drink->name}}</i>
                                         </td>
-                                        <td class="table_drink">${{$drink->price}}
-                                        </td>
+                                        <td class="table_drink">${{$drink->price}}</td>
                                         <td class="table_drink">
                                             <a href="javascript:void(0)" @click="edit_drink({{$drink}})">
                                             <i class="fa fa-pencil-square-o fa-2x " aria-hidden="true"></i>
@@ -105,7 +104,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="">Description :</label>
-                                    <textarea class="form-control" name="description" v-model="item_drink.description" rows="5"></textarea>
+                                    <textarea  rows="5" class="form-control" name="description" v-model="item_drink.description"></textarea>
                                 </div>
                                 <button type="submit" class="btn btn-primary">Submit</button>
                             </form>
@@ -128,7 +127,6 @@
                                 {{ csrf_field() }}
                                 <div class="form-group">
                                     <label for="">Name :</label>
-                                    <i style="color: red">(* Please insert name food)</i>
                                     <input type="text" class="form-control" name="name" v-model="new_drink.name">
                                 </div>
                                 <div class="form-group">
@@ -137,9 +135,21 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="">Description :</label>
-                                    <textarea class="form-control" name="description" v-model="new_drink.description" rows="5"></textarea>
+                                    <textarea rows="5" type="text" class="form-control" name="description" v-model="new_drink.description"></textarea>
                                 </div>
-                                <button type="submit" class="btn btn-primary" >Submit</button>
+                                <div class="form-group">
+                                    <label for="">Images : </label>
+                                    {{-- <input type="file"  class="form-control" name="image_drink" v-model="new_drink.image_drink" > --}}
+                                    <input id="fileupload" type="file" multiple="multiple" name='image' v-on:change="onChange"/>
+                                    </br>
+                                    <b>Live Preview</b>
+                                    <br />
+                                    <div id="dvPreview">
+                                    </div>
+                                </div>
+
+                                
+                                <button type="submit" class="btn btn-primary">Submit</button>
                             </form>
                         </div>
                         <div class="modal-footer">
@@ -157,8 +167,38 @@
     {{ HTML::script('bower/datatables.net-bs/js/dataTables.bootstrap.min.js') }}
     {{ HTML::script('bower/fastclick/lib/fastclick.js') }}
     <script>
-        $(function () {
+        $(document).ready(function () {
+            $(function () {
+                $("#fileupload").change(function () {
+                    if (typeof (FileReader) != "undefined") {
+                        var dvPreview = $("#dvPreview");
+                        dvPreview.html("");
+                        var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.jpg|.jpeg|.gif|.png|.bmp)$/;
+                        $($(this)[0].files).each(function () {
+                            var file = $(this);
+                            if (regex.test(file[0].name.toLowerCase())) {
+                                var reader = new FileReader();
+                                reader.onload = function (e) {
+                                    var img = $("<img />");
+                                    img.attr("style", "height:150px;width: 200px");
+                                    img.attr("src", e.target.result);
+                                    dvPreview.append(img);
+                                }
+                                reader.readAsDataURL(file[0]);
+                            } else {
+                                alert(file[0].name + " is not a valid image file.");
+                                dvPreview.html("");
+                                return false;
+                            }
+                        });
+                    } else {
+                        alert("This browser does not support HTML5 FileReader.");
+                    }
+                });
+            });
+            $(function () {
             $('#example1').DataTable();
+        })
         });
     </script>
     {{ HTML::script('js/admin/manage_drink.js') }}

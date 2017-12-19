@@ -106,7 +106,7 @@
 
                                     <div class="progress-group" v-for="prd in product">
                                         <span class="progress-text">@{{prd.name}}</span>
-                                        <span class="progress-number"><b>@{{prd.so_luong}}</b>/@{{sum}}</span>
+                                        <span class="progress-number"><b>@{{prd.so_luong*100/sum | currency('','')}}%</b></span>
                                         <div class="progress sm">
                                             <div v-if="prd.so_luong*100/sum>=50" class="progress-bar progress-bar-aqua" v-bind:style="{ width: prd.so_luong*100/sum +'%' }"></div>
                                             <div v-if="prd.so_luong*100/sum>=40 && prd.so_luong*100/sum<50" class="progress-bar progress-bar-red" v-bind:style="{ width: prd.so_luong*100/sum + '%' }"></div>
@@ -120,33 +120,16 @@
                         </div>
                         <div class="box-footer">
                             <div class="row">
-                                <div class="col-sm-3 col-xs-6">
+                                <div class="col-sm-6 col-xs-6">
                                     <div class="description-block border-right">
-                                        <span class="description-percentage text-green"><i class="fa fa-caret-up"></i> 17%</span>
                                         <h5 class="description-header">$ @{{tongtien}}</h5>
                                         <span class="description-text">TOTAL REVENUE</span>
                                     </div>
                                 </div>
-                                <div class="col-sm-3 col-xs-6">
+                                <div class="col-sm-6 col-xs-6">
                                     <div class="description-block border-right">
-                                        <span class="description-percentage text-yellow"><i
-                                                    class="fa fa-caret-left"></i> 0%</span>
                                         <h5 class="description-header">$ @{{tien_ngay}}</h5>
                                         <span class="description-text">TOTAL COST</span>
-                                    </div>
-                                </div>
-                                <div class="col-sm-3 col-xs-6">
-                                    <div class="description-block border-right">
-                                        <span class="description-percentage text-green"><i class="fa fa-caret-up"></i> 20%</span>
-                                        <h5 class="description-header">$24,813.53</h5>
-                                        <span class="description-text">TOTAL PROFIT</span>
-                                    </div>
-                                </div>
-                                <div class="col-sm-3 col-xs-6">
-                                    <div class="description-block">
-                                        <span class="description-percentage text-red"><i class="fa fa-caret-down"></i> 18%</span>
-                                        <h5 class="description-header">1200</h5>
-                                        <span class="description-text">GOAL COMPLETIONS</span>
                                     </div>
                                 </div>
                             </div>
@@ -158,7 +141,8 @@
     </div>
 @endsection
 @section('script')
-    {{ HTML::script('js/admin/thongke.js') }}
     {{ HTML::script('bower/jsapi/index') }}
+    {{ HTML::script('js/admin/thongke.js') }}
     {{ HTML::script('js/admin/report.js') }}
+
 @endsection

@@ -26,8 +26,10 @@ class CreateUsersTable extends Migration
                 $table->integer('level')->default(0);
                 $table->string('avatar')->nullable()->default(null);
                 $table->integer('cart')->nullable()->default(0);
+                $table->integer('fb')->nullable()->default(0);
                 $table->rememberToken();
-                $table->timestamps();
+                $table->timestamp('updated_at')->useCurrent();
+                $table->timestamp('created_at')->useCurrent();
             });
         }
     }

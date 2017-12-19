@@ -6,6 +6,7 @@ use App\Models\Comment;
 use App\Models\Gallery;
 use App\Models\Product;
 use App\Models\User;
+use App\Models\Cart;
 use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -52,35 +53,35 @@ class ProductController extends Controller
 
     public function getdata_product()
     {
-        $product = Product::all();
+        $product = Product::where('hidden','=',0)->get();
 
         return Response::json($product);
     }
 
     public function getdata_food()
     {
-        $food = Product::where('category', '=', 'Food')->paginate(30);
+        $food = Product::where('category', '=', 'Food')->where('hidden','=',0)->paginate(30);
 
         return Response::json($food);
     }
 
     public function getdata_drink()
     {
-        $drink = Product::where('category', '=', 'Drink')->paginate(30);
+        $drink = Product::where('category', '=', 'Drink')->where('hidden','=',0)->paginate(30);
 
         return Response::json($drink);
     }
 
     public function all_food()
     {
-        $food = Product::all()->where('category', '=', 'Food');
+        $food = Product::all()->where('category', '=', 'Food')->where('hidden','=',0);
 
         return Response::json($food);
     }
 
     public function all_drink()
     {
-        $drink = Product::all()->where('category', '=', 'Drink');
+        $drink = Product::all()->where('category', '=', 'Drink')->where('hidden','=',0);
 
         return Response::json($drink);
     }
@@ -88,7 +89,10 @@ class ProductController extends Controller
     // Food
     public function delete_food(Request $req)
     {
-        return Product::destroy($req->id);
+        $product = Product::where('id','=',$req->id)->first();
+        $product->hidden = 1;
+        $product->save();
+        return Response::json($product);
     }
 
     public function update_food(Request $request, $id)
@@ -123,30 +127,35 @@ class ProductController extends Controller
                 'name'        => 'required|unique:products,name|min:3|max:30|',
                 'price'       => 'required|min:0',
                 'description' => 'required',
-                // 'image' => 'required',
+                'image' => 'required',
             ],
             [
-                'name.required' => 'Please Insert Name',
-                'price.required' => 'Please Insert Price',
+                'name.required'        => 'Please Insert Name',
+                'price.required'       => 'Please Insert Price',
                 'description.required' => 'Please Insert Description',
             ]);
-            $new_food = new Product();
-            $new_food->name = $request->name;
-            $new_food->price = $request->price;
-            $new_food->description = $request->description;
-            $new_food->avatar = $request->image;
-            $new_food->category = "Food";
-            $new_food->save();
-            $new_category= new Gallery();
-            $new_category->product_id = $new_food->id;
-            $new_category->image = $new_food->avatar;
-            $new_category->save();
+        $new_food = new Product();
+        $new_food->name = $request->name;
+        $new_food->price = $request->price;
+        $new_food->description = $request->description;
+        $new_food->avatar = $request->image;
+        $new_food->category = "Food";
+        $new_food->save();
+        $new_category = new Gallery();
+        $new_category->product_id = $new_food->id;
+        $new_category->image = $new_food->avatar;
+        $new_category->save();
     }
 
     //drink
     public function delete_drink(Request $req)
     {
-        return Product::destroy($req->id);
+
+        $product = Product::where('id','=',$req->id)->first();
+        $product->hidden = 1;
+        $product->save();
+        return Response::json($product);
+
     }
 
     public function update_drink(Request $request, $id)
@@ -179,22 +188,24 @@ class ProductController extends Controller
                 'name'        => 'required|unique:products,name|min:3|max:30|',
                 'price'       => 'required|min:0',
                 'description' => 'required',
+                'image' => 'required',
             ],
             [
-                'name.required'        => 'Please Insert Name',
-                'price.required'       => 'Please Insert Price',
+                'name.required' => 'Please Insert Name',
+                'price.required' => 'Please Insert Price',
                 'description.required' => 'Please Insert Description',
             ]);
-
-        return Product::create(
-            [
-
-                'name'        => $request->input(['name']),
-                'price'       => $request->input(['price']),
-                'description' => $request->input(['description']),
-                'category'    => "Drink",
-
-            ]);
+            $new_drink = new Product();
+            $new_drink->name = $request->name;
+            $new_drink->price = $request->price;
+            $new_drink->description = $request->description;
+            $new_drink->avatar = $request->image;
+            $new_drink->category = "drink";
+            $new_drink->save();
+            $new_category= new Gallery();
+            $new_category->product_id = $new_drink->id;
+            $new_category->image = $new_drink->avatar;
+            $new_category->save();
     }
 
 
@@ -230,6 +241,13 @@ class ProductController extends Controller
 
     }
 
+    public function deleteCmt(Request $request)
+    {
+        Comment::destroy($request->id1);
+
+        return redirect(route('product.detail', $request->id));
+    }
+
     public function updaterate(Request $request)
     {
         $product = $request->prd1;
@@ -258,7 +276,8 @@ class ProductController extends Controller
         return $count;
     }
 
-    public function product_hot(){
+    public function product_hot()
+    {
         $product_hot = DB::select('
             select products.name, sum(order_details.quantity) as so_luong
             from order_details,products 
@@ -271,34 +290,73 @@ class ProductController extends Controller
             select sum(order_details.quantity) as so_luong
             from order_details
             ');
-        $product_hot['sum']= $sum;
+        $product_hot['sum'] = $sum;
+
         return Response::json($product_hot);
     }
 
-    public function totalamount(){
+    public function totalamount()
+    {
         $totalamount = DB::select('
             select sum(sum) as tong_tien
             from orders
             ');
+
         return Response::json($totalamount);
     }
 
-    public function day_total(){
+    public function day_total()
+    {
         $ngay_hientai = DB::select('
             select sum(sum) as tong_tien
             from orders
             where DATE(orders.created_at) = Curdate()
             ');
+
         return Response::json($ngay_hientai);
     }
 
-    public function thang_total(){
+    public function thang_total()
+    {
         $thang_hientai = DB::select('
             select sum(sum) as tong_tien
             from orders
             where Month(orders.created_at) = Curdate()
             ');
-        return Response::json($ngay_hientai);
+
+        return Response::json($thang_hientai);
+    }
+
+    public function editCmt(Request $request)
+    {
+        $cmt = Comment::find($request->id);
+        $cmt->rated = $request->cmt_star;
+        $cmt->content = $request->content1;
+        $cmt->save();
+
+        return redirect(route('product.detail', $cmt->product_id));
+    }
+    public function addCart(Request $request){
+        $cart = Cart::where('product_id', '=', $request->prd)->where('user_id','=',Auth::user()->id)->first();
+        if ($cart != null) {
+            $cart->quantity += $request->quantf;
+            $cart->save();
+        }
+
+        else {
+            $cart = new Cart();
+            $cart->user_id = Auth::user()->id;
+            $cart->product_id = $request->prd;
+            $cart->quantity = $request->quantf;
+            $cart->save();
+            $user = Auth::user();
+            $user->cart += 1;
+            $user->save();
+        }
+
+
+        return view('sections.menu.header');
+
     }
 
 }

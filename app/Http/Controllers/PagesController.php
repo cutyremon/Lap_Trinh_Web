@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Mail\OrderShipped;
 use App\Mail\UserEmail;
 use App\Models\Cart;
+use App\Models\Comment;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Product;
@@ -19,7 +20,7 @@ class PagesController extends Controller
     public function showCart()
     {
         $user = Auth::user();
-        $products = DB::table('products')->join('cart', 'products.id', '=', 'cart.product_id')->distinct()->get();
+        $products = DB::table('products')->join('cart', 'products.id', '=', 'cart.product_id')->where('cart.user_id','=',Auth::user()->id)->distinct()->get();
         $user->cart = $products->count();
         $user->save();
 
@@ -108,6 +109,7 @@ class PagesController extends Controller
         $user = User::findOrFail($user->id);
         $data = new UserEmail();
         $data->subject = "Foodee Order Success";
+
         // Mail::to($user)->send($data);
         return redirect(route('thankyou'));
     }
@@ -119,5 +121,12 @@ class PagesController extends Controller
             ->get();
 
         return view('sites.user.detail', compact('id', 'products'));
+    }
+
+    public function getCmt($id)
+    {
+        $cmt = Comment::find($id);
+
+        return view('sites.comment_detail', compact('cmt'));
     }
 }

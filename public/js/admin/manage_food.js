@@ -35,9 +35,9 @@ var manage_food = new Vue	({
                 json: true,
             }
             axios(authOptions).then(response => {
-                toastr.success('Delete user success', 'Success', {timeOut: 1000});
+                toastr.success('Delete food success', 'Success', {timeOut: 1000});
         }).catch((error) => {
-                toastr.error('Delete user error', 'Error', {timeOut: 1000});
+                toastr.error('Delete food error', 'Error', {timeOut: 1000});
         });
             this.show_food();
         },
@@ -53,9 +53,9 @@ var manage_food = new Vue	({
                 json: true,
             }
             axios(authOptions).then(response => {
-                toastr.success('Edit user success', 'Success', {timeOut: 1000});
+                toastr.success('Edit food success', 'Success', {timeOut: 1000});
         }).catch((error) => {
-                toastr.error('Edit user error', 'Error', {timeOut: 1000});
+                toastr.error('Edit food error', 'Error', {timeOut: 1000});
         });
             this.show_food
         },

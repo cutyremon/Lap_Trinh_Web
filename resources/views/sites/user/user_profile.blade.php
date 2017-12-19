@@ -34,7 +34,7 @@
     @include('sections.menu.header')
 
     <div class="container bootstrap snippet background_user user-profile" style="height: 700px">
-        <div class="col-sm-3 sidebar">
+        <div class="col-sm-3 sidebar" style="width: 31% !important;">
             <div class="row fix-profile-bottom">
                 <div class="img-avata-icon">
                     @if((Auth::user()->avatar) != null)
@@ -72,10 +72,12 @@
                 <a data-toggle="modal" data-target="#modalProfile">
                     (<i class="fa fa-pencil"></i> {{ __('Update Profile') }})
                 </a>
-                <a href="javascript:void(0)" class="text-center" data-toggle="modal" data-target="#modalPassword"
-                   style="margin-left: 5px;">
-                    (<i class="fa fa-pencil"></i> {{ __('Change Password') }})
-                </a>
+                @if(Auth::user()->fb == 0)
+                    <a href="javascript:void(0)" class="text-center" data-toggle="modal" data-target="#modalPassword"
+                       style="margin-left: 5px;">
+                        (<i class="fa fa-pencil"></i> {{ __('Change Password') }})
+                    </a>
+                @endif
             </div>
         </div>
         <div class="col-sm-8" style="margin-left: 25px;">
@@ -107,9 +109,9 @@
                                         @if($order->status == "inprogress" )
                                             <div class="btn btn-info" style="width: 120px">{{$order->status}}</div>
                                         @elseif($order->status == "waiting")
-                                            <div class="btn btn-warning" style="width: 120px" >{{$order->status}}</div>
-                                        @elseif($order->status == "complete")
-                                            <div class="btn btn-success" style="width: 120px" >{{$order->status}}</div>
+                                            <div class="btn btn-warning" style="width: 120px">{{$order->status}}</div>
+                                        @elseif($order->status == "completed")
+                                            <div class="btn btn-success" style="width: 120px">{{$order->status}}</div>
                                         @endif
                                     </td>
                                     <td>
@@ -253,7 +255,6 @@
                             {{ Form::password('old_password',
                                 [
                                 'class' => 'form-control',
-                                'placeholder' => 'enter old password',
                                 'required' => 'required',
                                 ]
                             ) }}
@@ -263,7 +264,6 @@
                             {{ Form::password('new_password',
                                 [
                                 'class' => 'form-control',
-                                'placeholder' => 'enter new password',
                                 'required' => 'required',
                                 ]
                             ) }}
@@ -273,7 +273,6 @@
                             {{ Form::password('confirm',
                                 [
                                 'class' => 'form-control',
-                                'placeholder' => 'confirm',
                                 'required' => 'required',
                                 ]
                             ) }}

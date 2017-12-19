@@ -5,6 +5,9 @@ var manage_food = new Vue	({
         sum :'',
         tongtien :'',
         tien_ngay:'',
+        day:[],
+        month:[],
+        year:[],
     },
     computed: {
     },
@@ -12,6 +15,7 @@ var manage_food = new Vue	({
         this.product_hot();
         this.tong_tien();
         this.tong_tien_ngay_ht();
+        this.chart();
     },
     methods: {
         product_hot:function() {
@@ -51,6 +55,19 @@ var manage_food = new Vue	({
 
         });
         },
+
+        chart:function()
+        {
+            var authOptions = {
+                method: 'get',
+                url: '/api/v1/day',
+                json: true,
+            }
+            axios(authOptions).then(response => {
+                this.day = response.data;
+                console.log(this.day);
+            });
+        }
 
 
 

@@ -2,7 +2,7 @@ google.load("visualization", "1", {packages:["corechart"]});
 google.setOnLoadCallback(drawCharts);
 function drawCharts() {
     var barData = google.visualization.arrayToDataTable([
-        ['Day', 'Price Total', 'Total Hair'],
+        ['Day', 'COST Total', 'ORDER Total'],
         ['Sun',  50,      600],
         ['Mon',  1200,      910],
         ['Tue',  660,       400],
@@ -61,7 +61,7 @@ function drawCharts() {
 ///////////////////////////////////////////////////////////
 $('#day').click(function(){
     barData = google.visualization.arrayToDataTable([
-        ['Day', 'Price Total', 'Total Hair'],
+        ['Day', 'COST Total', 'ORDER Total'],
         ['Sun',  50,      600],
         ['Mon',  1200,      910],
         ['Tue',  660,       400],
@@ -119,7 +119,7 @@ $('#day').click(function(){
 ////////////////////////////////////////////////////////
 $('#month').click(function(){
     barData = google.visualization.arrayToDataTable([
-        ['Week', 'Price Total', 'Total Hair'],
+        ['Week', 'COST Total', 'ORDER Total'],
         ['Week 1',  50,      600],
         ['Week 2',  1200,      910],
         ['Week 3',  660,       400],
@@ -175,7 +175,7 @@ $('#month').click(function(){
 ///////////////////////////////////////////////////////////////
 $('#year').click(function(){
     barData = google.visualization.arrayToDataTable([
-        ['Monthly', 'Price Total', 'Total Hair'],
+        ['Monthly', 'COST Total', 'ORDER Total'],
         ['Jan',  50,      600],
         ['Feb',  1200,      910],
         ['Mar',  660,       400],

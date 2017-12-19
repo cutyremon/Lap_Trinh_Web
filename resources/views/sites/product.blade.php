@@ -3,6 +3,7 @@
     <title>Product</title>
     {{ HTML::style('css/sites/product_detail.css') }}
     {{ HTML::style('bower/bootstrap-star-rating/css/star-rating.css') }}
+    {{ HTML::style('css/sites/bootstrap-responsive.min.css') }}
 @endsection
 
 @section('content')
@@ -36,7 +37,9 @@
             </ul>
         </div>
     </div>
+    <div id="add_order">
     @include('sections.menu.header')
+    </div>
 
     <div id="wrapper">
         <div id="content">
@@ -81,8 +84,8 @@
 
             <div id="line"></div>
 
-            <form action="{{route('addToCart',$prd_id)}}" method="POST">
-                {{ csrf_field() }}
+            {{--<form action="{{route('addToCart',$prd_id)}}" method="POST">--}}
+                {{--{{ csrf_field() }}--}}
                 <div id="info">
                     <div id="info-content">
                         <div id="header">
@@ -116,7 +119,7 @@
                             <div class="row">
                                 <p class="product-description"><span
                                             style="font-weight: bold;font-size: 1.2em">Quantity : </span>
-                                    <input type="number" class="quantity" name="quantity" min="1" value="1">
+                                    <input type="number" class="quantity" id="quantify_1" name="quantity" min="1" value="1">
                                 </p>
                             </div>
                         </div>
@@ -128,7 +131,8 @@
                                         <button class="add-to-cart btn btn-success" type="button">Review Food
                                         </button>
                                     </a>
-                                    <button class="add-to-cart btn btn-success" type="submit">add to cart
+                                    <input type="hidden" id="prd_quantify" value="{{$prd_detail->id}}">
+                                    <button class="add-to-cart btn btn-success"  onclick="add_function()">add to cart
                                     </button>
                                 </div>
                             </div>
@@ -136,7 +140,7 @@
 
                     </div>
                 </div>
-            </form>
+            {{--</form>--}}
         </div>
         <div id="comment">
             <div class="row" id="comment-box">
@@ -220,5 +224,6 @@
     {{ HTML::script('js/sites/product_detail.js') }}
     {{ HTML::script('js/sites/star-rating.js')}}
     {{ HTML::script('js/sites/product_comment.js')}}
+    {{ HTML::script('bower/bootbox/bootbox.js') }}
 @endsection
 

@@ -43,12 +43,12 @@
                                             <div class="btn btn-info" style="width: 120px">{{$order->status}}</div>
                                         @elseif($order->status == "waiting")
                                             <div class="btn btn-warning" style="width: 120px" >{{$order->status}}</div>
-                                        @elseif($order->status == "complete")
+                                        @elseif($order->status == "completed")
                                             <div class="btn btn-success" style="width: 120px" >{{$order->status}}</div>
                                         @endif
                                     </td>
                                     <td class="text-center">
-                                        <a href="javascript:void(0)" 
+                                        <a href="javascript:void(0)"
                                         @click="show_detail_order({{$order->id}})">
                                         <i class="fa fa-pencil-square-o fa-2x " aria-hidden="true"></i>
                                         </a>
@@ -79,9 +79,9 @@
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                     <input type="" name="id" v-model ="id" class="id_status">
                                     <select name = "status" class="status" >
-                                        <option value="waiting" v-if="status == 'inprogress' || status == 'waiting'   "  style="background-color:yellow">waiting</option>
-                                        <option value="inprogress"  v-if="status == 'inprogress'" >inprogress</option>
-                                        <option value="complete" style="background-color:green">complete</option>
+                                        <option value="waiting" v-if="status != 'inprogress' && status != 'completed'   "  style="background-color:yellow">waiting</option>
+                                        <option value="inprogress"  v-if="status == 'inprogress' || status == 'waiting'" >inprogress</option>
+                                        <option value="completed" style="background-color:green">completed</option>
                                     </select>
                                     <button type="submit" class="btn btn-primary">Check</button>
                                 </form>
@@ -114,7 +114,7 @@
                                     </tr>
                                 </tbody>
                             </table>
-                            
+
                         </div>
                     </div>
                 </div>

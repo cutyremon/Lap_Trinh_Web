@@ -323,5 +323,4 @@
     {{ HTML::script('bower/jquery-1.12.4/index.js')}}
     {{ HTML::script('bower/jquery-ui/jquery-ui.js') }}
     {{ HTML::script('js/sites/page_menu.js') }}
-    {{ HTML::script('js/sites/product_comment.js') }}
 @endsection

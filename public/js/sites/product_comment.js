@@ -40,3 +40,47 @@ function myFunction() {
 
     });
 }
+function add_function(){
+    $quantf=$('#quantify_1').val();
+    $prd=$('#prd_quantify').val();
+    $.ajax({
+        headers:
+            {
+                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+            },
+        url: '/addcart',
+        type: 'GET',
+        data: {
+            quantf: $quantf,
+            prd: $prd
+        },
+        success: function (data) {
+            $('#add_order').html(data);
+        }
+
+    });
+
+}
+
+$(document).ready(function () {
+    $('.cmtID').on('click', function () {
+        $id = $(this).parent('.bbb').find('.inputcmt').val();
+        console.log($id);
+        getCmt($id);
+    })
+
+    function getCmt($id) {
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+            },
+            url: '/getCmt/' + $id,
+            type: 'get',
+            data: {},
+            success: function (data) {
+                $('#result').html(data);
+            }
+        })
+    }
+
+})

@@ -14,7 +14,7 @@ class MenuController extends Controller
 
     public function search(Request $req)
     {
-    	$product = Product::where('name','like',"%$req->name_product%")->get();
+    	$product = Product::where('name','like',"%$req->name_product%")->where('hidden','=',0)->get();
     	return view('sites.product_search',compact('product'));
     }
 }

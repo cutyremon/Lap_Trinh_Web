@@ -124,13 +124,11 @@ class UserController extends Controller
                     return "Change password success";
                 }
                 else {
-                    $error = ['old_password' => 'Please enter correct current password'];
-
-                    return response()->json(['error' => $error], 400);
+                    return "Change password error";
                 }
             }
         }
 
-        return redirect()->to('/');
+        return redirect()->to('');
     }
 }

@@ -30,6 +30,21 @@
                                            data-readonly="true" data-max="5" data-min="0"
                                            data-step="0.5"
                                            size="sm" title="">
+                                    @if(Auth::user())
+                                        @if(Auth::user()->id == $comment->user_id)
+                                            <div class="bbb">
+                                                <input type="hidden" class="inputcmt" value="{{$comment->id}}">
+                                                <a class="btn delete"
+                                                   href={{route('deleteCmt',[$comment->product_id,$comment->id])}}
+                                                           onclick="bootbox.confirm();"></a>
+                                                <a class="cmtID" href="javascript:void(0)" data-toggle="modal"
+                                                   data-target="#modalcmt"
+                                                   data-id="{{$comment->id}}">
+                                                    <button type="sub" class="edit1" style="cursor: pointer;"></button>
+                                                </a>
+                                            </div>
+                                        @endif
+                                    @endif
                                 </div>
                                 <div class="review-block-description">
                                     {{ $comment->content }}
@@ -40,8 +55,22 @@
             </div>
         </div>
     @endforeach
+    <div id="modalcmt" class="modal fade" role="dialog">
+        <div class="modal-dialog order">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    {{ Form::button('x', [ 'class' => 'close', 'data-dismiss' => 'modal' ]) }}
+                    <h4 class="modal-title">{{ __('Edit Comment') }}</h4>
+                </div>
+                <div class="modal-body" id="result" style="padding: 0 15px 15px 15px !important;">
 
+                </div>
+            </div>
+        </div>
+    </div>
 </div> <!-- /container -->
 {{ HTML::script('/js/sites/product_comment.js')}}
 {{ HTML::script('js/sites/product_detail.js') }}
 {{ HTML::script('js/sites/star-rating.js')}}
+{{ HTML::script('bower/bootbox/bootbox.js') }}

@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\User;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Product;
+use App\Models\User;
 use Auth;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Response;
+
 class AdminController extends Controller
 {
     protected $information;
@@ -22,7 +23,8 @@ class AdminController extends Controller
         OrderDetail $orderDetail,
         Order $order,
         Product $product
-    ){
+    )
+    {
         $this->information = $information;
         $this->order = $order;
         $this->orderDetail = $orderDetail;
@@ -41,6 +43,7 @@ class AdminController extends Controller
             ->join('order_details', 'products.id', '=', 'order_details.product_id')
             ->distinct()
             ->get();
+
         return view('admin.pages.dashboard_admin', compact(
             'totalorder',
             'totaluser',
@@ -49,13 +52,14 @@ class AdminController extends Controller
         ));
     }
 
-     public function manage_food()
+    public function manage_food()
     {
         $Order = $this->order->all();
         $totalorder = $Order->count();
-        $all_foods = Product::where('category','=','Food')->get();
+        $all_foods = Product::where('category', '=', 'Food')->where('hidden','=',0)->get();
+
         return view('admin.pages.manage_food', compact(
-        'totalorder','all_foods'
+            'totalorder', 'all_foods'
         ));
     }
 
@@ -77,27 +81,28 @@ class AdminController extends Controller
     {
         $Order = $this->order->all();
         $totalorder = $Order->count();
-        $all_drinks = Product::where('category','=','drink')->get();
+        $all_drinks = Product::where('category', '=', 'drink')->where('hidden','=',0)->get();
+
         return view('admin.pages.manage_drink', compact(
-        'totalorder','all_drinks'
+            'totalorder', 'all_drinks'
         ));
     }
 
-    public function manage_customer ()
+    public function manage_customer()
     {
         $users = User::all();
-        return view('admin.pages.manage_customer1',compact('users'));
+
+        return view('admin.pages.manage_customer1', compact('users'));
     }
 
-    public function manage_order ()
+    public function manage_order()
     {
-        // $orders  = DB::table('orders')
-        //     ->join('users' ,'orders.user_id' ,'=','users.id')
-        //     ->get();
         $orders = DB::select('
             select orders.id ,users.name, orders.created_at, orders.product_count, orders.sum ,orders.status from orders, users
             where orders.user_id = users.id
+            order by orders.created_at desc
             ');
+
         return view('admin.pages.manage_order', compact('orders'));
     }
 
@@ -105,7 +110,7 @@ class AdminController extends Controller
     {
         $inforUser = $this->information->where('id', '=', $id)->get();
 
-        return view('admin.pages.user_profile_manage', compact('inforUser','id'));
+        return view('admin.pages.user_profile_manage', compact('inforUser', 'id'));
     }
 
     public function user_order($user_id)
@@ -113,15 +118,17 @@ class AdminController extends Controller
         $so_luong = DB::table('orders')
             ->where('user_id', '=', $user_id)
             ->count();
+
         return Response::json($so_luong);
     }
 
     public function order_detail($order_id)
     {
-        $order_details  = DB::table('order_details')
-            ->join('products' ,'order_details.product_id' ,'=','products.id')
-            ->join('orders','orders.id','=','order_details.order_id')
-            ->where('order_id',$order_id)->get();
+        $order_details = DB::table('order_details')
+            ->join('products', 'order_details.product_id', '=', 'products.id')
+            ->join('orders', 'orders.id', '=', 'order_details.order_id')
+            ->where('order_id', $order_id)->get();
+
         return Response::json($order_details);
     }
 
@@ -134,10 +141,12 @@ class AdminController extends Controller
         $complete = DB::select('
             select count(*) as so_luong
             from orders
-            where DATE(orders.updated_at) = Curdate() and orders.status ="complete"
+            where DATE(orders.updated_at) = Curdate() and orders.status ="completed"
             ');
+
         return Response::json($complete);
     }
+
     public function waiting()
     {
         $waiting = DB::select('
@@ -145,8 +154,10 @@ class AdminController extends Controller
             from orders
             where DATE(orders.updated_at) = Curdate() and orders.status ="waiting"
             ');
+
         return Response::json($waiting);
     }
+
     public function inprogress()
     {
         $inprogress = DB::select('
@@ -154,6 +165,7 @@ class AdminController extends Controller
             from orders
             where DATE(orders.updated_at) = Curdate() and orders.status ="inprogress"
             ');
+
         return Response::json($inprogress);
     }
 
@@ -162,56 +174,66 @@ class AdminController extends Controller
         $food_sl = DB::select('
             select count(*) as so_luong
             from products
-            where products.category = "Food"
+            where products.category = "Food" and products.hidden = 0
             ');
+
         return Response::json($food_sl);
     }
 
-     public function drink_sl()
+    public function drink_sl()
     {
         $drink_sl = DB::select('
             select count(*) as so_luong
             from products
-            where products.category = "Drink"
+            where products.category = "Drink" and products.hidden = 0
             ');
+
         return Response::json($drink_sl);
     }
 
-    public function month(){
+    public function month()
+    {
         $month = DB::select('
             select month(orders.created_at) as month , sum(orders.sum) as tong_so, count(*) as so_luong
             from orders
             where year(orders.created_at) = year(curdate())
             group by month
             ');
+
         return Response::json($month);
 
     }
 
-    public function day(){
+    public function day()
+    {
         $day = DB::select('
             select day(orders.created_at) as days , sum(orders.sum) as tong_so, count(*) as so_luong
             from orders
             where month(orders.created_at) = month(curdate())
             group by days
             ');
+
         return Response::json($day);
     }
 
-    public function year(){
+    public function year()
+    {
         $years = DB::select('
             select year(orders.created_at) as years , sum(orders.sum) as tong_so, count(*) as so_luong
             from orders
             group by years
             ');
+
         return Response::json($years);
     }
 
-    public function change_status(Request $request){
+    public function change_status(Request $request)
+    {
 
-        $order = Order::where('id','=',$request->id)->first();
+        $order = Order::where('id', '=', $request->id)->first();
         $order->status = $request->status;
         $order->save();
-        return Redirect()->back(); 
+
+        return Redirect()->back();
     }
 }

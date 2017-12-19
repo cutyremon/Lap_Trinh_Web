@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Socialite;
-use App\Models\User;
 
 class LoginController extends Controller
 {
@@ -40,6 +40,7 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
     /**
      * Redirect the user to the facebook authentication page.
      *
@@ -59,20 +60,22 @@ class LoginController extends Controller
     {
         $userSocial = Socialite::driver('facebook')->user();
         $findUser = User::where('email', $userSocial->email)->first();
-        if($findUser)
-        {
+        if ($findUser) {
             Auth::login($findUser);
+
             return redirect()->route('home');
         }
         else {
-        $user = new User;
-        $user->name = $userSocial->name;
-        $user->email = $userSocial->email;
-        $user->avatar = $userSocial->avatar;
-        $user->password =bcrypt('123456');
-        $user->save();
-        Auth::login($user);
-        return redirect()->route('home');
+            $user = new User;
+            $user->name = $userSocial->name;
+            $user->email = $userSocial->email;
+            $user->avatar = $userSocial->avatar;
+            $user->password = bcrypt('123456');
+            $user->fb = 1;
+            $user->save();
+            Auth::login($user);
+
+            return redirect()->route('home');
         }
     }
 }

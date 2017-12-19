@@ -1,14 +1,15 @@
-var manage_drink = new Vue	({
+var manage_drink = new Vue   ({
     el:'#manage_drink',
     data : {
         drinks:[],
+        image:'',
         item_drink:{'name':'','price':'','description':'',},
-        new_drink:{'name':'','price':'','description':'','category':'',},
+        new_drink:{'name':'','price':'','description':'','category':'','image':''},
     },
     computed: {
     },
     mounted :function(){
-        // this.show_drink();
+        this.show_drink();
     },
     methods: {
         show_drink :function(){
@@ -19,7 +20,7 @@ var manage_drink = new Vue	({
             }
             axios(authOptions).then(response => {
                 this.$set(this, 'drinks', response.data);
-            console.log(response.data);
+            console.log(this.drinks);
         });
         },
         confirm_delete: function(drink){
@@ -30,7 +31,7 @@ var manage_drink = new Vue	({
             console.log(id);
             var authOptions = {
                 method: 'get',
-                url: '/api/v1/delete_drink/'+ id,
+                url: '/api/v1/delete_drink/' + id,
                 json: true,
             }
             axios(authOptions).then(response => {
@@ -47,7 +48,7 @@ var manage_drink = new Vue	({
         edit : function(id){
             var authOptions = {
                 method: 'post',
-                url: '../api/v1/update_drink/'+ id,
+                url: '../api/v1/update_drink/' + id,
                 params: this.item_drink,
                 json: true,
             }
@@ -56,13 +57,15 @@ var manage_drink = new Vue	({
         }).catch((error) => {
                 toastr.error('Edit drink error', 'Error', {timeOut: 1000});
         });
-            this.show_drink;
+            this.show_drink
         },
         show_create : function(){
             $('#show_create').modal('show');
         },
         create_drink : function(){
             var input = this.new_drink;
+            this.new_drink['image'] = this.image;
+            this.new_drink['category'] = 'drink';
             console.log(input);
             var authOptions = {
                 method: 'post',
@@ -70,16 +73,19 @@ var manage_drink = new Vue	({
                 params: input,
                 json: true
             }
-
             axios(authOptions).then((response) => {
-                this.new_drink ={'name':'','price':'','describle':'','category':'',};
+                this.new_drink ={'name':'','price':'','describle':''};
             toastr.success('Add drink success', 'Success', {timeOut: 1000});
         }).catch((error) => {
-                console.log(error);
                 toastr.error('Add drink error', 'Error', {timeOut: 1000});
         });
             // console.log('hihi')
         },
+        onChange: function(e) {
+            e.preventDefault()
+            this.image = e.target.files[0].name;
+            
+        }
 
 
     }
