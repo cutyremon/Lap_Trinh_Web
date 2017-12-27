@@ -79,12 +79,19 @@ class ProductController extends Controller
         return Response::json($food);
     }
 
-    public function all_drink()
+     public function all_drink()
     {
         $drink = Product::all()->where('category', '=', 'Drink')->where('hidden', '=', 0);
 
         return Response::json($drink);
     }
+
+    // public function all_drink()
+    // {
+    //     $food = Product::all()->where('category', '=', 'Food')->where('hidden', '=', 0);
+
+    //     return Response::json($food);
+    // }
 
     // Food
     public function delete_food(Request $req)

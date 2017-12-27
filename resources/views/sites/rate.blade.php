@@ -17,7 +17,8 @@
                data-max="5"
                data-size="xs" data-step=0.1 value="{!! round($prd_detail->rated * 2) / 2 !!}"
                title="" disabled="disabled">
-        <h4>( Rated {{bcdiv($prd_detail->rated,1,2)}}/5 by {{$countuser}} People )</h4>
+        {{-- <h4>( Rated {{bcdiv($prd_detail->rated,1,2)}}/5 by {{$countuser}} People )</h4> --}}
+        <h4>( Rated {{$prd_detail->rated}}/5 by {{$countuser}}People )</h4>
     </div>
 @endif
 {{ HTML::script('js/sites/product_detail.js') }}
