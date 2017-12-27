@@ -141,7 +141,7 @@ class AdminController extends Controller
         $complete = DB::select('
             select count(*) as so_luong
             from orders
-            where DATE(orders.updated_at) = Curdate() and orders.status ="completed"
+            where DATE(orders.updated_at) = CURRENT_DATE and lower(orders.status) = \'completed\'
             ');
 
         return Response::json($complete);
@@ -152,7 +152,7 @@ class AdminController extends Controller
         $waiting = DB::select('
             select count(*) as so_luong
             from orders
-            where DATE(orders.updated_at) = Curdate() and orders.status ="waiting"
+            where DATE(orders.updated_at) = CURRENT_DATE and lower(orders.status) =\'waiting\'
             ');
 
         return Response::json($waiting);
@@ -163,7 +163,7 @@ class AdminController extends Controller
         $inprogress = DB::select('
             select count(*) as so_luong
             from orders
-            where DATE(orders.updated_at) = CURRENT_DATE and lower(orders.status) ="inprogress"
+            where DATE(orders.updated_at) = CURRENT_DATE and lower(orders.status) =\'inprogress\'
             ');
 
         return Response::json($inprogress);
@@ -174,7 +174,7 @@ class AdminController extends Controller
         $food_sl = DB::select('
             select count(*) as so_luong
             from products
-            where products.category = "Food" and products.hidden = 0
+            where lower(products.category) = \'food\' and products.hidden = 0
             ');
 
         return Response::json($food_sl);
@@ -185,7 +185,7 @@ class AdminController extends Controller
         $drink_sl = DB::select('
             select count(*) as so_luong
             from products
-            where products.category = "Drink" and products.hidden = 0
+            where lower(products.category) = \'drink\' and products.hidden = 0
             ');
 
         return Response::json($drink_sl);
@@ -194,9 +194,9 @@ class AdminController extends Controller
     public function month()
     {
         $month = DB::select('
-            select month(orders.created_at) as month , sum(orders.sum) as tong_so, count(*) as so_luong
+            select extract( month from orders.created_at) as month , sum(orders.sum) as tong_so, count(*) as so_luong
             from orders
-            where year(orders.created_at) = year(curdate())
+            where extract( year from orders.created_at) = extract( year from CURRENT_DATE)
             group by month
             ');
 
@@ -207,9 +207,9 @@ class AdminController extends Controller
     public function day()
     {
         $day = DB::select('
-            select day(orders.created_at) as days , sum(orders.sum) as tong_so, count(*) as so_luong
+            select extract(day from orders.created_at) as days , sum(orders.sum) as tong_so, count(*) as so_luong
             from orders
-            where month(orders.created_at) = month(curdate())
+            where extract(month from orders.created_at) = extract(month from CURRENT_DATE)
             group by days
             ');
 
@@ -219,7 +219,7 @@ class AdminController extends Controller
     public function year()
     {
         $years = DB::select('
-            select year(orders.created_at) as years , sum(orders.sum) as tong_so, count(*) as so_luong
+            select extract(year from orders.created_at) as years , sum(orders.sum) as tong_so, count(*) as so_luong
             from orders
             group by years
             ');

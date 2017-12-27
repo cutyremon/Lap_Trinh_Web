@@ -317,7 +317,7 @@ class ProductController extends Controller
         $ngay_hientai = DB::select('
             select sum(sum) as tong_tien
             from orders
-            where DATE(orders.created_at) = Curdate()
+            where extract( day from orders.created_at) = extract(day from CURRENT_DATE)
             ');
 
         return Response::json($ngay_hientai);
