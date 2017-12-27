@@ -28,7 +28,7 @@ new Vue({
             };
             axios(authOptions).then(response => {
             	this.complete_sl = response.data[0].so_luong;
-            	console.log(this.complete_sl );
+            	// console.log(this.complete_sl );
 			});
 		},
 		waiting: function(){
@@ -39,7 +39,7 @@ new Vue({
             };
             axios(authOptions).then(response => {
             	this.waiting_sl = response.data[0].so_luong;
-            	console.log(this.waiting_sl );
+            	// console.log(this.waiting_sl );
 			});
 		},
 		inprogress: function(){
@@ -50,7 +50,7 @@ new Vue({
             };
             axios(authOptions).then(response => {
             	this.inprogress_sl = response.data[0].so_luong;
-            	console.log(this.inprogress_sl );
+            	// console.log(this.inprogress_sl );
 			});
 			
 		},
@@ -62,7 +62,7 @@ new Vue({
             };
             axios(authOptions).then(response => {
             	this.drink_sl = response.data[0].so_luong;
-            	console.log(this.drink_sl );
+            	// console.log(this.drink_sl );
 			});
 			
 		},
@@ -74,7 +74,7 @@ new Vue({
             };
             axios(authOptions).then(response => {
             	this.food_sl = response.data[0].so_luong;
-            	console.log(this.food_sl );
+            	// console.log(this.food_sl );
 			});
 			
 		},
