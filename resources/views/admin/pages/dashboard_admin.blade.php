@@ -71,26 +71,26 @@
                         <div class="box-body">
                             <div class="row">
                                 <div class="col-md-8">
-                                    <ul class="nav nav-tabs" role="tablist">
+        {{--                             <ul class="nav nav-tabs" role="tablist">
                                     <li role="presentation" class="active"><a href="#day" aria-controls="home" role="tab" data-toggle="tab">Day</a></li>
-                                        <li role="presentation"><a href="#month" aria-controls="profile" role="tab" data-toggle="tab">Monthly</a></li>
+                                        <li role="presentation"><a href="#month" aria-controls="profile" role="tab" data-toggle="tab" java >Monthly</a></li>
                                         <li role="presentation"><a href="#year" aria-controls="messages" role="tab" data-toggle="tab">Year</a></li>
-                                    </ul>
+                                    </ul> --}}
 
                                     <div class="tab-content">
-                                        <div role="tabpanel" class="tab-pane active" id="day">
+                                        <div id="day">
                                             <p class="text-center">
                                             <strong>{{ __('Day Report') }} </strong>
                                             </p>
                                              <div id="bar-chart"></div>
                                         </div>
-                                        <div role="tabpanel" class="tab-pane" id="month">
+                                        <div id="month">
                                             <p class="text-center">
                                             <strong>{{ __('Month Report') }} </strong>
                                             </p>
                                              <div id="bar-chart1"></div>
                                         </div>
-                                        <div role="tabpanel" class="tab-pane" id="year">
+                                        <div id="year">
                                             <p class="text-center">
                                             <strong>{{ __('Year Report') }} </strong>
                                             </p>
@@ -143,6 +143,6 @@
 @section('script')
     {{ HTML::script('bower/jsapi/index') }}
     {{ HTML::script('js/admin/thongke.js') }}
-    {{ HTML::script('js/admin/report.js') }}
+{{--     {{ HTML::script('js/admin/report.js') }} --}}
 
 @endsection
