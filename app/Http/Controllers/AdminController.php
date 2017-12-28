@@ -44,6 +44,25 @@ class AdminController extends Controller
             ->distinct()
             ->get();
 
+        $order_details = OrderDetail::all();
+        foreach ($order_details as $ord_detail) {
+            $prd = Product::find($ord_detail->product_id);
+            $ord_detail->total = $prd->price * $ord_detail->quantity;
+            $ord_detail->save();
+        }
+        $orders_1 = Order::all();
+
+        foreach ($orders_1 as $ord) {
+            $sum = 0;
+            $ord_dts = OrderDetail::where('order_id', '=', $ord->id)->get();
+            foreach ($ord_dts as $ord_dt) {
+                $sum += $ord_dt->total;
+            }
+            $ord->sum = $sum;
+            $ord->save();
+        }
+
+
         return view('admin.pages.dashboard_admin', compact(
             'totalorder',
             'totaluser',
@@ -198,6 +217,7 @@ class AdminController extends Controller
             from orders
             where extract( year from orders.created_at) = extract( year from CURRENT_DATE)
             group by month
+            order by month ASC
             ');
 
         return Response::json($month);
@@ -211,6 +231,7 @@ class AdminController extends Controller
             from orders
             where extract(month from orders.created_at) = extract(month from CURRENT_DATE)
             group by days
+            order by days ASC
             ');
 
         return Response::json($day);
@@ -222,6 +243,7 @@ class AdminController extends Controller
             select extract(year from orders.created_at) as years , sum(orders.sum) as tong_so, count(*) as so_luong
             from orders
             group by years
+            order by years ASC
             ');
 
         return Response::json($years);

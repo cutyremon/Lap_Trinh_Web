@@ -127,7 +127,7 @@
                         <div id="right">
                             <div id="row">
                                 <div class="action">
-                                    <a href="#reviews-anchor" id="open-review-box" style="float: left">
+                                    <a href="#reviews-anchor" id="open-review-box" style="float: left;width: 115px">
                                         <button class="add-to-cart btn btn-success" type="button">Review Food
                                         </button>
                                     </a>

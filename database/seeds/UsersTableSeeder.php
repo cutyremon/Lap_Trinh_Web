@@ -3,6 +3,8 @@
 use Illuminate\Database\Seeder;
 use Faker\Factory as Faker;
 use App\Models\User;
+use App\Models\Order;
+use App\Models\OrderDetail;
 
 class UsersTableSeeder extends Seeder
 {
@@ -13,7 +15,52 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        // DB::table('users')->delete();
+        $faker = Faker::create();
+        for ($i=0; $i < 50; $i++) { 
+            $user = User::create(
+            [
+            'email' => $faker->email,
+            'password' => bcrypt($faker->word),
+            'name' => $faker->username,
+            'date_of_birth' => $faker->date,
+            'gender' => $faker->title('male'|'female') ,
+            'phone'  => $faker->phonenumber,
+            'address' => $faker->address,
+            'avatar' => $faker->image,
+            ]);
+            $a = $faker->numberBetween($min = 1, $max = 30);
+            for ($j=1; $j < $a; $j++) { 
+                $order = Order::create(
+                [
+                'user_id' => $user->id,
+                'product_count' => $faker->numberBetween($min = 1, $max = 9),
+                'status' => 'waiting',
+                'sum' => '0',
+                ]);
+                $b = array();
+                for ($z=0; $z <$order->product_count ; $z++) { 
+                    $mang[1] = $faker->numberBetween($min = 1, $max = 30);
+                    $mang[2] = $order->id;
+                    $mang[3] = $faker->numberBetween($min = 1, $max = 6);
+                    
+                    $m = $z;
+                    $b[$z] = $mang[1];
+                    $c = count($b)-1;
+                    for ($k=0; $k <$c ; $k++) { 
+                        if($b[$k] == $b[$c]) 
+                            $z = $z-1;
+                    }
+                    if($z == $m-1) continue;
+                    $orderdetail = OrderDetail::create(
+                    [
+                    'product_id' => $mang[1],
+                    'order_id' =>$mang[2],
+                    'quantity' => $mang[3],
+                    'total' => '0',        
+                    ]);
+                }
+            }
+        }
         // DB::table('users')->insert(
         //     [
         //         [
@@ -119,20 +166,5 @@ class UsersTableSeeder extends Seeder
 
         //     ]
         // );
-        $faker = Faker::create();
-        for ($i=0; $i < 500; $i++) { 
-            $user = User::create(
-            [
-            'email' => $faker->email,
-            'password' => bcrypt($faker->word),
-            'name' => $faker->username,
-            'date_of_birth' => $faker->date,
-            'gender' => $faker->title,
-            'phone'  => $faker->phoneNumber,
-            'address' => $faker->address,
-            'avatar' => $faker->image,
-        
-            ]);
-        }
     }
 }

@@ -16,7 +16,7 @@ class OrderDetailSeeder extends Seeder
         $faker = Faker::create();
         for ($j=0; $j <6 ; $j++) { 
             for ($i =1; $i < 31 ; $i++) { 
-            $user = OrderDetail::create(
+            $orderdetail = OrderDetail::create(
             [
             'product_id' => $i,
             'order_id' => $faker->numberBetween($min = 2, $max = 40),

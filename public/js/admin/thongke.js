@@ -78,7 +78,7 @@ var x = new Vue	({
                 {
                     var data_1 = 'Ngay'+ ' ' + this.day[n]['days'];
                     var data_2 = this.day[n]['tong_so'];
-                    var data_3 = this.day[n]['so_luong'];
+                    var data_3 = this.day[n]['so_luong']*100;
                     console.log(data_1);
                     console.log(data_2);
                     console.log(data_3);
@@ -156,7 +156,7 @@ var x = new Vue	({
                 {
                     var data_1 = 'thang'+ ' ' + this.month[n]['month'];
                     var data_2 = this.month[n]['tong_so'];
-                    var data_3 = this.month[n]['so_luong'];
+                    var data_3 = this.month[n]['so_luong']*100;
                     console.log(data_1);
                     console.log(data_2);
                     console.log(data_3);
@@ -234,7 +234,7 @@ var x = new Vue	({
                 {
                     var data_1 = 'Nam'+ ' ' + this.year[n]['years'];
                     var data_2 = this.year[n]['tong_so'];
-                    var data_3 = this.year[n]['so_luong'];
+                    var data_3 = this.year[n]['so_luong']*100;
                     console.log(data_1);
                     console.log(data_2);
                     console.log(data_3);
