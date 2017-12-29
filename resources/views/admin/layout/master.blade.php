@@ -482,6 +482,7 @@
     {{ HTML::script('bower/admin-lte/dist/js/demo.js') }}
     {{ HTML::script('bower/vue2-filters/dist/vue2-filters.js') }}
     {{ HTML::script('js/admin/admin_page.js') }}
+    {{ HTML::script('bower/jsapi/index') }}
     <script>
         $(document).ready(function () {
             $('#logout-1').on('click', function () {

@@ -27,16 +27,18 @@
                                     <th class="text-center weight-title">Name</th>
                                     <th class="text-center weight-title">Email</th>
                                     <th class="text-center weight-title">Phone</th>
+                                    <th class="text-center weight-title">Order quantity</th>
                                     <th class="text-center weight-title">Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($users as $user )
                                     <tr>
-                                        <td>{{$user->id}}</td>
-                                        <td>{{$user->name}}</td>
-                                        <td>{{$user->email}}</td>
-                                        <td>{{$user->phone}}</td>
+                                        <td class="text-center">{{$user->id}}</td>
+                                        <td class="text-center">{{$user->name}}</td>
+                                        <td class="text-center">{{$user->email}}</td>
+                                        <td class="text-center">{{$user->phone}}</td>
+                                        <td class="text-center">{{$user->soluong}}</td>
                                         <td class="text-center">
                                             <a href="javascript:void(0)" @click="show_info_user({{$user}})">
                                             <i class="fa fa-pencil-square-o fa-2x " aria-hidden="true"></i>

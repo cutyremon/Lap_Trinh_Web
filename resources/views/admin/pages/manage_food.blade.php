@@ -31,6 +31,7 @@
                                     <th class="text-center">ID</th>
                                     <th class="text-center">Avatar</th>
                                     <th class="text-center">Price</th>
+                                    <th class="text-center">Order quantity</th>
                                     <th class="text-center">Action</th>
                                 </tr>
                                 </thead>
@@ -39,10 +40,13 @@
                                     <tr>
                                         <td class="table_food">{{ $food->id}}</td>
                                         <td class="table_food">
+                                            <a href="../product/{{$food->id}}" title="">
                                             <img src="../img/{{$food->avatar}}" class="fix-img" alt="">
                                             <i> {{$food->name}}</i>
+                                            </a>
                                         </td>
                                         <td class="table_food">${{$food->price}}</td>
+                                         <td class="table_food">{{$food->soluong}}</td>
                                         <td class="table_food">
                                             <a href="javascript:void(0)" @click="edit_food({{$food}})">
                                             <i class="fa fa-pencil-square-o fa-2x " aria-hidden="true"></i>
@@ -59,6 +63,7 @@
                                     <th class="text-center">ID</th>
                                     <th class="text-center">Avatar</th>
                                     <th class="text-center">Price</th>
+                                     <th class="text-center">Buy</th>
                                     <th class="table-center">Action</th>
                                 </tr>
                                 </tfoot>

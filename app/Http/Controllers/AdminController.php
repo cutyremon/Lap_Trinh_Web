@@ -73,13 +73,13 @@ class AdminController extends Controller
 
     public function manage_food()
     {
-        $Order = $this->order->all();
-        $totalorder = $Order->count();
-        $all_foods = Product::where('category', '=', 'Food')->where('hidden','=',0)->get();
-
-        return view('admin.pages.manage_food', compact(
-            'totalorder', 'all_foods'
-        ));
+        $all_foods = Product::where('category', 'like', '%ood')->where('hidden','=',0)
+                    ->select('products.id','products.avatar','products.price','products.name','products.description',DB::raw('SUM(order_details.quantity) as soluong'))
+                    ->leftjoin('order_details', 'order_details.product_id', '=', 'products.id')
+                    ->groupBy('products.id')
+                    ->orderBy('products.id', 'asc')
+                    ->get();
+        return view('admin.pages.manage_food', compact( 'all_foods'));
     }
 
     public function post_products(Request $request)
@@ -87,7 +87,6 @@ class AdminController extends Controller
         $produces = new Product();
         $produces->name = $request->name;
         $produces->price = $request->price;
-//        $produces->category = $request->category;
         $produces->description = $request->description;
         $produces->avatar = $request->avatar;
         $produces->save();
@@ -98,19 +97,24 @@ class AdminController extends Controller
 
     public function manage_drink()
     {
-        $Order = $this->order->all();
-        $totalorder = $Order->count();
-        $all_drinks = Product::where('category', '=', 'Drink')->where('hidden','=',0)->get();
-
-        return view('admin.pages.manage_drink', compact(
-            'totalorder', 'all_drinks'
-        ));
+        $all_drinks = Product::where('category', 'like', '%rink')->where('hidden','=',0)
+                    ->select('products.id','products.avatar','products.price','products.name','products.description',DB::raw('SUM(order_details.quantity) as soluong'))
+                    ->leftjoin('order_details', 'order_details.product_id', '=', 'products.id')
+                    ->groupBy('products.id')
+                    ->orderBy('products.id', 'asc')
+                    ->get();
+        return view('admin.pages.manage_drink', compact( 'all_drinks'));
     }
 
     public function manage_customer()
     {
-        $users = User::all();
-
+        // $users = User::all();
+        $users = User::
+            select('users.id','users.email','users.name','users.date_of_birth','users.phone','users.address','users.avatar',DB::raw('COUNT(orders.id) as soluong'))
+            ->leftjoin('orders', 'users.id', '=', 'orders.user_id')
+            ->groupBy('users.id')
+            ->orderBy('users.id', 'asc')
+            ->get();
         return view('admin.pages.manage_customer1', compact('users'));
     }
 
@@ -121,7 +125,6 @@ class AdminController extends Controller
             where orders.user_id = users.id
             order by orders.created_at desc
             ');
-
         return view('admin.pages.manage_order', compact('orders'));
     }
 

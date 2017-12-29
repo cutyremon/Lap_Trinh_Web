@@ -3,8 +3,8 @@ var manage_food = new Vue	({
     data : {
         foods:[],
         image:'',
-        item_food:{'name':'','price':'','description':'',},
-        new_food:{'name':'','price':'','description':'','category':'','image':''},
+        item_food:{'name':'','price':'','description':''},
+        new_food:{'name':'','price':'','description':'','category':'','image':'',},
     },
     computed: {
     },

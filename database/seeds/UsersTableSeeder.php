@@ -16,7 +16,7 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         $faker = Faker::create();
-        for ($i=0; $i < 50; $i++) { 
+        for ($i=0; $i < 60; $i++) { 
             $user = User::create(
             [
             'email' => $faker->email,
@@ -28,7 +28,7 @@ class UsersTableSeeder extends Seeder
             'address' => $faker->address,
             'avatar' => $faker->image,
             ]);
-            $a = $faker->numberBetween($min = 1, $max = 30);
+            $a = $faker->numberBetween($min = 1, $max = 3);
             for ($j=1; $j < $a; $j++) { 
                 $order = Order::create(
                 [
