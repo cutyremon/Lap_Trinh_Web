@@ -82,11 +82,25 @@ class AdminController extends Controller
         return view('admin.pages.manage_food', compact( 'all_foods'));
     }
 
+    // public function post_products(Request $request)
+    // {
+    //     $produces = new Product();
+    //     $produces->name = $request->name;
+    //     $produces->price = $request->price;
+    //     $produces->description = $request->description;
+    //     $produces->avatar = $request->avatar;
+    //     $produces->save();
+
+    //     return redirect()->back();
+
+    // }
+
     public function post_products(Request $request)
     {
         $produces = new Product();
         $produces->name = $request->name;
         $produces->price = $request->price;
+       $produces->category = $request->category;
         $produces->description = $request->description;
         $produces->avatar = $request->avatar;
         $produces->save();

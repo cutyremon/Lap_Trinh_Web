@@ -95,3 +95,4 @@ Route::get('chart', function () {
     return view('admin.pages.chartjs');
 });
 Route::get('addcart', 'ProductController@addCart')->name('addCart');
+

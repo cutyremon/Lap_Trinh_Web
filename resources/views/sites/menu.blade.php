@@ -9,7 +9,7 @@
         <div class="toggle">
             <ul class="toggle-menu">
                 @if (Auth::guest())
-                    <li><a href="{{route('home')}}">Home</a></li>
+                        <li><a href="{{route('home')}}">Home</a></li>
                     <li><a class="active" href="{{route('menu')}}">Menu</a></li>
                     <li><a href="{{ route('login') }}">Login</a></li>
                     <li><a href="{{ route('register') }}">Register</a></li>
@@ -172,11 +172,11 @@
                         <div class="row fix-height-menu">
                             <section id="projects">
                                 <div class="row fix-height-menu">
-                                    <div class="thumbex" v-for="food in foods">
+                                    <div class="thumbex" v-for="foodee in foods">
                                         <div class="thumbnail">
-                                            <a v-bind:href="'../product/'+food.id">
-                                                <img v-bind:src="url+food.avatar"/>
-                                                <span>@{{ food.name }}</span>
+                                            <a v-bind:href="'../product/'+foodee.id">
+                                                <img v-bind:src="url+foodee.avatar"/>
+                                                <span>@{{ foodee.name }}</span>
                                             </a>
                                         </div>
                                     </div>
@@ -319,4 +319,5 @@
     {{ HTML::script('bower/jquery-1.12.4/index.js')}}
     {{ HTML::script('bower/jquery-ui/jquery-ui.js') }}
     {{ HTML::script('js/sites/page_menu.js') }}
+    {{ HTML::script('js/sites/product_comment.js') }}
 @endsection

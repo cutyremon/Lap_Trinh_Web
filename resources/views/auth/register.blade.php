@@ -23,7 +23,7 @@
                     {!! Form::input('email','email',old('email'),['id'=>'email','autofocus'=>'true']) !!}
                     @if ($errors->has('email'))
                         <span class="help-block">
-                            <strong>{{ $errors->first('email') }}</strong>
+                            <strong id="id_email">{{ $errors->first('email') }}</strong>
                         </span>
                     @endif
                 </div>
@@ -48,7 +48,6 @@
                                     </span>
                     @endif
                 </div>
-
                 <input type="submit" value="Register"/>
                 {!! Form::close() !!}
             </div>

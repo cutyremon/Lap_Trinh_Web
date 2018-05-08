@@ -18,7 +18,7 @@ var manage_food = new Vue	({
                 url: '/api/v1/all_foods',
                 json: true,
             }
-            axios(authOptions).then(response => {
+            axios(authOptions).then(response = > {
                 this.$set(this, 'foods', response.data);
             console.log(this.foods);
         });
