@@ -10,8 +10,6 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-
 Auth::routes();
 
 Route::get('/', 'HomeController@index');
@@ -95,4 +93,3 @@ Route::get('chart', function () {
     return view('admin.pages.chartjs');
 });
 Route::get('addcart', 'ProductController@addCart')->name('addCart');
-

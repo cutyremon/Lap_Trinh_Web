@@ -1,7 +1,7 @@
 <?php
- 
+
 namespace App\Http\Controllers;
- 
+
 use Mail;
 use App\Models\User;
 use App\Mail\OrderShipped;
@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Mail\UserEmail;
- 
+
 class EmailController extends Controller
 {
     /**
@@ -22,8 +22,8 @@ class EmailController extends Controller
     {
         $this->middleware('auth');
     }
- 
-      public function sendEmailReminder(Request $request)
+
+    public function sendEmailReminder(Request $request)
     {
         // $id = 2; // điền 1 mã id bất kỳ của user trong bảng users 
         // $user = User::findOrFail($id);
