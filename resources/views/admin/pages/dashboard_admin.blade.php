@@ -76,18 +76,23 @@
                                             <p class="text-center">
                                             <strong>{{ __('Day Report') }} </strong>
                                             </p>
+                                            <p class="text-center">tube continue ..</p>
+
                                              <div id="bar-chart"></div>
                                         </div>
                                         <div id="month">
                                             <p class="text-center">
                                             <strong>{{ __('Month Report') }} </strong>
                                             </p>
+                                            <p class="text-center">tube continue ..</p>
                                              <div id="bar-chart1"></div>
                                         </div>
                                         <div id="year">
                                             <p class="text-center">
                                             <strong>{{ __('Year Report') }} </strong>
                                             </p>
+                                            <p class="text-center">tube continue ..</p>
+
                                              <div id="bar-chart2"></div>
                                         </div>
                                     </div>
@@ -116,7 +121,7 @@
                             <div class="row">
                                 <div class="col-sm-6 col-xs-6">
                                     <div class="description-block border-right">
-                                        <h5 class="description-header">$ @{{tongtien}}</h5>
+                                        <h5 class="description-header"> $ @{{tongtien}}</h5>
                                         <span class="description-text">TOTAL REVENUE</span>
                                     </div>
                                 </div>
@@ -134,6 +139,7 @@
         </section>
     </div>
 @endsection
+
 @section('script')
     {{ HTML::script('js/admin/thongke.js') }}
 @endsection
