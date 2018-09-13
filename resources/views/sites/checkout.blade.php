@@ -10,7 +10,7 @@
     <div class="nastv-icon">
         <a href="#" class="navicon"></a>
         <div class="toggle">
-            <ul class="toggle-menu">
+                  <ul class="toggle-menu">
                 <h3>Hello {{Auth::user()->name}}</h3>
                 @if(Auth::user()->level == 1)
                     <li><a href="{{route('admin_home')}}">ADMIN</a></li>
@@ -264,4 +264,3 @@
         });
     </script>
 @endsection
-

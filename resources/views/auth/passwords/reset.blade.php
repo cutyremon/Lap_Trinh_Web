@@ -26,10 +26,10 @@
                         @endif
                     </div>
 
-                    <div class="{{ $errors->has('password') ? ' has-error' : '' }}">
+                                           <div class="{{ $errors->has('password') ? ' has-error' : '' }}">
                         <label>Password</label>
                         <input id="password" type="password" name="password">
-                        @if ($errors->has('password'))
+                                       @if ($errors->has('password'))
                             <span class="help-block">
                                         <strong>{{ $errors->first('password') }}</strong>
                                     </span>

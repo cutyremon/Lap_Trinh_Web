@@ -42,7 +42,7 @@ var x = new Vue	({
             }
             axios(authOptions).then(response => {
                 this.tongtien = response.data[0]['tong_tien'];
-                // console.log(this.tongtien);
+                console.log(this.tongtien);
 
         });
         },
@@ -54,7 +54,7 @@ var x = new Vue	({
             }
             axios(authOptions).then(response => {
                 this.tien_ngay = response.data[0]['tong_tien'];
-                // console.log(this.tien_ngay);
+                console.log(this.tien_ngay);
 
         });
         },
